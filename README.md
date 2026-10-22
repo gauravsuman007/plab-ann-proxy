@@ -94,3 +94,11 @@ use the published port (`http://<host>:8101`).
 pip install -r announce-proxy/requirements.txt pytest
 pytest announce-proxy/tests
 ```
+
+## Deploying on a host without git
+
+`deploy.sh` downloads this repo as a tarball into `~/Server/plab-ann-proxy/src`, builds the image and
+starts it. Config (`.env`, e.g. `UI_PASSWORD=...`) and `data/` live one level up, so updates keep them.
+
+    mkdir -p ~/Server/plab-ann-proxy && cd ~/Server/plab-ann-proxy
+    curl -fsSLO https://raw.githubusercontent.com/gauravsuman007/plab-ann-proxy/main/deploy.sh && sh deploy.sh
