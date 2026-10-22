@@ -1,5 +1,4 @@
-# The standalone announce proxy. Deploy/update with ./deploy.sh (downloads the repo and builds it; needs only curl, tar and docker).
-# From a checkout you can also run: docker compose up -d --build
+# The standalone announce proxy. Deploy with: docker compose up -d   (pulls the prebuilt multi-arch image from GHCR; update with: docker compose pull && docker compose up -d)
 #
 # Two ports, deliberately different:
 #   ANNOUNCE_PORT  what torrent clients (and a reverse proxy, if you expose it) hit.
@@ -10,8 +9,7 @@
 # move either without touching the other.
 services:
   announce-proxy:
-    build: .
-    image: plab-ann-proxy:local
+    image: ghcr.io/gauravsuman007/plab-ann-proxy:latest
     container_name: announce-proxy
     environment:
       DATA_DIR: /data

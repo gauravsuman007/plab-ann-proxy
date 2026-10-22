@@ -95,10 +95,15 @@ pip install -r announce-proxy/requirements.txt pytest
 pytest announce-proxy/tests
 ```
 
-## Deploying on a host without git
+## Images
 
-`deploy.sh` downloads this repo as a tarball into `~/Server/plab-ann-proxy/src`, builds the image and
-starts it. Config (`.env`, e.g. `UI_PASSWORD=...`) and `data/` live one level up, so updates keep them.
+Every push to `main` runs the tests, then builds the image natively per architecture and publishes one
+multi-arch tag, `ghcr.io/gauravsuman007/plab-ann-proxy:latest` (also `:<commit sha>`):
 
-    mkdir -p ~/Server/plab-ann-proxy && cd ~/Server/plab-ann-proxy
-    curl -fsSLO https://raw.githubusercontent.com/gauravsuman007/plab-ann-proxy/main/deploy.sh && sh deploy.sh
+| Platform | Built on |
+|---|---|
+| `linux/amd64` | native x86-64 runner |
+| `linux/arm64` | native arm64 runner |
+| `linux/arm/v7` | arm64 runner under QEMU user emulation (GitHub has no 32-bit ARM runners; current arm64 runners cannot execute 32-bit code natively) |
+
+No building happens on the deploy host: `docker compose up -d` just pulls.
